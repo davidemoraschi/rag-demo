@@ -16,7 +16,7 @@ documents = []
 # Load PDFs
 pdf_files = [
     "SQL Performance Explained.pdf",
-    "The Definitive Guide to SQLite.pdf",
+    # "The Definitive Guide to SQLite.pdf",
 ]  # <-- Your PDFs here
 for pdf_path in pdf_files:
     if os.path.exists(pdf_path):
@@ -30,14 +30,14 @@ repo_url = (
     "https://github.com/microsoft/Windows-classic-samples.git"  # <-- Your repo here
 )
 
-loader = GitLoader(
-    clone_url=repo_url,
-    repo_path=repo_path,
-    branch="main",
-    file_filter=lambda x: x.endswith((".py", ".md", ".txt", ".js")),
-)
-documents.extend(loader.load())
-print(f"✓ Loaded GitHub repo")
+# loader = GitLoader(
+#     clone_url=repo_url,
+#     repo_path=repo_path,
+#     branch="main",
+#     file_filter=lambda x: x.endswith((".py", ".md", ".txt", ".js")),
+# )
+# documents.extend(loader.load())
+# print(f"✓ Loaded GitHub repo")
 
 # ============ 2. CHUNK DOCUMENTS ============
 
@@ -69,11 +69,11 @@ def format_docs(docs):
 
 template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
-{context}
+SQL Performance Explained.pdf
 
-Question: {question}
+Question: What is the Tokenizer and what does it accomplish
 
-Helpful Answer:"""
+Helpful Answer: The Tokenizer is used for ...."""
 
 custom_rag_prompt = PromptTemplate.from_template(template)
 
