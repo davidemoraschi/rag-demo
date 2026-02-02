@@ -1,12 +1,12 @@
 # rag_hello_world.py
-from langchain_community.document_loaders import PyPDFLoader, GitLoader  # type: ignore
-from langchain_text_splitters import RecursiveCharacterTextSplitter  # type: ignore
-from langchain_ollama import OllamaEmbeddings  # type: ignore
-from langchain_ollama import Ollama  # type: ignore
-from langchain_chroma import Chroma  # type: ignore
-from langchain_core.runnables import RunnablePassthrough  # type: ignore
-from langchain_core.prompts import PromptTemplate  # type: ignore
-from langchain_core.output_parsers import StrOutputParser  # type: ignore
+from langchain_community.document_loaders import PyPDFLoader, GitLoader  
+from langchain_text_splitters import RecursiveCharacterTextSplitter  
+from langchain_ollama import OllamaEmbeddings  
+from langchain_ollama import OllamaLLM  
+from langchain_chroma import Chroma  
+from langchain_core.runnables import RunnablePassthrough  
+from langchain_core.prompts import PromptTemplate  
+from langchain_core.output_parsers import StrOutputParser  
 import os
 
 # ============ 1. LOAD DOCUMENTS ============
@@ -33,7 +33,7 @@ repo_url = (
 loader = GitLoader(
     clone_url=repo_url,
     repo_path=repo_path,
-    branch="master",
+    branch="main",
     file_filter=lambda x: x.endswith((".py", ".md", ".txt", ".js")),
 )
 documents.extend(loader.load())
@@ -58,7 +58,7 @@ print("✓ Vector store created")
 
 # ============ 4. CREATE RAG CHAIN ============
 
-llm = Ollama(model="llama3.2")
+llm = OllamaLLM(model="llama3.2")
 
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
